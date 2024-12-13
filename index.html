@@ -3,47 +3,74 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+        <link href="https://fonts.font.im/css?family=Noto+Sans+SC:400,700" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
+        <button onclick="captureAndDownload()" style="background-color: #4CAF50; color: white; padding: 15px 25px; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); margin-top: 20px;">
+            Save as Image
+        </button>
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+        <script>
+            function captureAndDownload() {
+                // Hide the button before capturing
+                const button = document.querySelector('button');
+                button.style.display = 'none';
+                
+                html2canvas(document.body).then(function(canvas) {
+                    // Show the button again after capturing
+                    button.style.display = 'block';
+                    
+                    const link = document.createElement('a');
+                    link.download = 'webpage-capture.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            }
+        </script>
+        
         <img class="logo" src="static/cm logo.png"/>
         
         <div class="flex justify-between place-items-end">
             <div>
-                <h1>Hello</h1>
-                <h1 class="blue">Yu</h1>
+                <h1><i>Hello</i></h1>
+                <h1 class="blue"><i>John</i></h1>
                 <div class="mt-12"></div>
             </div>
 
             <img class="primary" src="static/key.png"/>
         </div>
 
-        <h2>Text <span class="blue">Text</span></h2>
-        <h2>Text <span class="blue">Text AI(?)</span></h2>
-        <h2>Text</h2>
+        <h2>试课<span class="blue">已确认</span></h2>
+        <h2>你离<span class="blue">解锁名校和AI</span></h2>
+        <h2>又近了一步</h2>
 
         <div class="bubble">
-            <h3>Text <span class="blue">Text</span></h3>
+            <h3>试课 <span class="blue">详情</span></h3>
             <table class="mt-12">
                 <tr>
-                    <td class="field-header">Field 1</td>
-                    <td class="field-value">Value 1</td>
+                    <td class="field-header">学生姓名</td>
+                    <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('name'))</script></td>
                 </tr>
                 <tr>
-                    <td class="field-header">Field 2</td>
-                    <td class="field-value">Value 2</td>
+                    <td class="field-header">课程名称</td>
+                    <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('course'))</script></td>
                 </tr>
                 <tr>
-                    <td class="field-header">Field 3</td>
-                    <td class="field-value">Value 3</td>
+                    <td class="field-header">老师姓名</td>
+                    <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('instructor'))</script></td>
                 </tr>
                 <tr>
-                    <td class="field-header">Field 4</td>
-                    <td class="field-value">Value 4</td>
+                    <td class="field-header">日期时间</td>
+                    <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('datetime'))</script></td>
                 </tr>
                 <tr>
-                    <td class="field-header">Field 5</td>
-                    <td class="field-value">Value 5</td>
+                    <td class="field-header">试课方式</td>
+                    <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('mode'))</script></td>
+                </tr>
+                <tr>
+                    <td class="field-header">试课地址</td>
+                    <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('address'))</script></td>
                 </tr>
             </table>
         </div>
@@ -51,7 +78,7 @@
     <footer>
         <div class="flex justify-between">
             <div>
-                <h4 class="blue">Irvine</h4>
+                <h4 class="blue">Irvine校区</h4>
                 <ul>
                     <li>920 Roosevelt #200 Irvine, CA</li>
                     <li>(949) 236-7896</li>
@@ -63,16 +90,25 @@
         </div>
     </footer>
 
+    
+
     <style>
+        
+        @font-face {
+            font-family: "DouYu";
+            src: url("static/douyuFont-2.otf") format("opentype");
+        }
+    
         h1 {
             font-size: 120px;
             font-weight: 700;
             line-height: 100px;
         }
         h2 {
-            font-size: 75px;
+            font-size: 70px;
             font-weight: 700;
             line-height: 80px;
+            font-family: "DouYu", sans-serif;
         }
         h3 {
             font-size: 50px;
