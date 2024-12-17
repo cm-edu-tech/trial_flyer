@@ -75,10 +75,10 @@
                     <td class="field-header">试课地址</td>
                     <td class="field-value"><script>
                         const addressMap = {
-                            'Coding Minds Irvine': '920 Roosevelt #200, Irvine, CA',
-                            'CM Seattle': '4006 148th Ave NE, Redmond, WA 98052',       
-                            'Coding Minds Arcadia New' : '1010 S Baldwin Ave #202, Arcadia, CA 91007',
-                            'CModing Minds Diamond Bar' : '21308 Pathfinder Rd, Unit 206, Diamond Bar, CA 91765',
+                            'Irvine': '920 Roosevelt #200, Irvine, CA',
+                            'Seattle': '4006 148th Ave NE, Redmond, WA 98052',       
+                            'Arcadia' : '1010 S Baldwin Ave #202, Arcadia, CA 91007',
+                            'Diamond Bar' : '21308 Pathfinder Rd, Unit 206, Diamond Bar, CA 91765',
                         };
                         const org = new URLSearchParams(window.location.search).get('mode');
                         document.write(addressMap[org] || org);
@@ -159,11 +159,14 @@
         .field-header {
             font-weight: 600;
             font-size: 30px;
+            vertical-align: top;
+            width: 180px;
         }
         .field-value {
             padding-left: 1rem;
             font-weight: 300;
             font-size: 30px;
+            vertical-align: top;
         }
         li {
             list-style-type: circle;
