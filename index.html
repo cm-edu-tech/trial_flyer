@@ -49,30 +49,30 @@
             <h3>试课 <span class="blue">详情</span></h3>
             <table class="mt-12">
                 <tr>
-                    <td class="field-header">学生姓名</td>
+                    <td class="field-header">学生姓名:</td>
                     <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('name'))</script></td>
                 </tr>
                 <tr>
-                    <td class="field-header">课程名称</td>
+                    <td class="field-header">课程名称:</td>
                     <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('course'))</script></td>
                 </tr>
                 <tr>
-                    <td class="field-header">老师姓名</td>
+                    <td class="field-header">老师姓名:</td>
                     <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('instructor'))</script></td>
                 </tr>
                 <tr>
-                    <td class="field-header">日期时间</td>
+                    <td class="field-header">日期时间:</td>
                     <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('datetime'))</script></td>
                 </tr>
                 <tr>
-                    <td class="field-header">试课方式</td>
+                    <td class="field-header">试课方式:</td>
                     <td class="field-value"><script>
                         const mode = new URLSearchParams(window.location.search).get('mode');
                         document.write(mode.startsWith('https') ? 'Zoom' : mode + '校区线下');
                     </script></td>
                 </tr>
                 <tr>
-                    <td class="field-header">试课地址</td>
+                    <td class="field-header">试课地址:</td>
                     <td class="field-value"><script>
                         const addressMap = {
                             'Irvine': '920 Roosevelt #200, Irvine, CA',
@@ -156,18 +156,43 @@
             margin-top: 6rem;
             margin-bottom: 6rem;
         }
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            table-layout: fixed;
+            width: 100%;
+        }
         .field-header {
             font-weight: 600;
             font-size: 30px;
             vertical-align: top;
-            width: 180px;
+            width: 9rem;
+            padding: 0;
+            margin: 0;
+            white-space: nowrap;
         }
         .field-value {
-            padding-left: 1rem;
             font-weight: 300;
             font-size: 30px;
             vertical-align: top;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            white-space: normal;
+            word-break: break-word;
         }
+        tr {
+            padding: 0;
+            margin: 0;
+            display: table-row;
+        }
+        
+        td {
+            padding: 0;
+            margin: 0;
+            display: table-cell;
+        }
+
         li {
             list-style-type: circle;
             font-weight: 400;
@@ -182,5 +207,6 @@
             position: absolute;
             bottom:8rem;
         }
+
     </style>
 </html>
