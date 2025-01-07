@@ -1,44 +1,40 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
-        <link href="https://fonts.font.im/css?family=Noto+Sans+SC:400,700" rel="stylesheet">
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body>
-        <button onclick="captureAndDownload()" style="background-color: #4CAF50; color: white; padding: 15px 25px; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); margin-top: 20px;">
-            Save as Image
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.font.im/css?family=Noto+Sans+SC:400,700" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="fixed top-4 right-4 flex gap-4 z-50">
+        <button onclick="captureAndDownload('cn')" class="download-btn">
+            下载中文版
         </button>
-        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-        <script>
-            function captureAndDownload() {
-                // Hide the button before capturing
-                const button = document.querySelector('button');
-                button.style.display = 'none';
-                
-                html2canvas(document.body).then(function(canvas) {
-                    // Show the button again after capturing
-                    button.style.display = 'block';
-                    
-                    const link = document.createElement('a');
-                    link.download = 'webpage-capture.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                });
-            }
-        </script>
-        
-        <img class="logo" src="static/cm logo.png"/>
-        
+        <button onclick="captureAndDownload('en')" class="download-btn">
+            Download English
+        </button>
+    </div>
+
+    <!-- Chinese Version -->
+    <div id="cn" class="page">
+        <img class="logo" src="static/cm logo.png" />
+
         <div class="flex justify-between place-items-end">
             <div>
                 <h1><i>Hello</i></h1>
-                <h1 class="blue"><i><script>document.write(new URLSearchParams(window.location.search).get('name'))</script></i></h1>
+                <h1 class="blue"><i>
+                        <script>document.write(new URLSearchParams(window.location.search).get('name'))</script>
+                    </i></h1>
                 <div class="mt-12"></div>
             </div>
 
-            <img class="primary" src="static/key.png"/>
+            <img class="primary" src="static/key.png" />
         </div>
 
         <h2>试课<span class="blue">已确认</span></h2>
@@ -50,104 +46,311 @@
             <table class="mt-12">
                 <tr>
                     <td class="field-header">学生姓名:</td>
-                    <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('name'))</script></td>
+                    <td class="field-value">
+                        <script>document.write(new URLSearchParams(window.location.search).get('name'))</script>
+                    </td>
                 </tr>
                 <tr>
                     <td class="field-header">课程名称:</td>
-                    <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('course'))</script></td>
+                    <td class="field-value">
+                        <script>document.write(new URLSearchParams(window.location.search).get('course'))</script>
+                    </td>
                 </tr>
                 <tr>
                     <td class="field-header">老师姓名:</td>
-                    <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('instructor'))</script></td>
+                    <td class="field-value">
+                        <script>document.write(new URLSearchParams(window.location.search).get('instructor'))</script>
+                    </td>
                 </tr>
                 <tr>
                     <td class="field-header">日期时间:</td>
-                    <td class="field-value"><script>document.write(new URLSearchParams(window.location.search).get('datetime'))</script></td>
+                    <td class="field-value">
+                        <script>document.write(new URLSearchParams(window.location.search).get('datetime'))</script>
+                    </td>
                 </tr>
                 <tr>
                     <td class="field-header">试课方式:</td>
-                    <td class="field-value"><script>
-                        const mode = new URLSearchParams(window.location.search).get('mode');
-                        document.write(mode.startsWith('https') ? 'Zoom' : mode + '校区线下');
-                    </script></td>
+                    <td class="field-value">
+                        <script>
+                            const mode = new URLSearchParams(window.location.search).get('mode');
+                            document.write(mode.startsWith('https') ? 'Zoom' : mode + '校区线下');
+                        </script>
+                    </td>
                 </tr>
                 <tr>
                     <td class="field-header">试课地址:</td>
-                    <td class="field-value"><script>
-                        const addressMap = {
-                            'Irvine': '920 Roosevelt #200, Irvine, CA',
-                            'Seattle': '4006 148th Ave NE, Redmond, WA 98052',       
-                            'Arcadia' : '1010 S Baldwin Ave #202, Arcadia, CA 91007',
-                            'Diamond Bar' : '21308 Pathfinder Rd, Unit 206, Diamond Bar, CA 91765',
-                        };
-                        const org = new URLSearchParams(window.location.search).get('mode');
-                        document.write(addressMap[org] || org);
-                    </script></td>
+                    <td class="field-value">
+                        <script>
+                            const addressMap = {
+                                'Irvine': '920 Roosevelt #200, Irvine, CA',
+                                'Seattle': '4006 148th Ave NE, Redmond, WA 98052',
+                                'Arcadia': '1010 S Baldwin Ave #202, Arcadia, CA 91007',
+                                'Diamond Bar': '21308 Pathfinder Rd, Unit 206, Diamond Bar, CA 91765',
+                            };
+                            const org = new URLSearchParams(window.location.search).get('mode');
+                            document.write(addressMap[org] || org);
+                        </script>
+                    </td>
                 </tr>
             </table>
         </div>
-    </body>
-    <footer>
-        <div class="flex justify-between">
+
+        <footer>
+            <div class="flex justify-between">
+                <div>
+                    <h4 class="blue">
+                        <script>document.write(mode.startsWith('https') ? 'Irvine' : mode);</script>校区
+                    </h4>
+                    <ul>
+                        <li>
+                            <script>document.write(addressMap[org] || addressMap['Irvine']);</script>
+                        </li>
+                        <li>
+                            <script>
+                                const phoneMap = {
+                                    'Irvine': '(949) 236-7896',
+                                    'Seattle': '(949) 236-7896',
+                                    'Arcadia': '(626) 620-2728',
+                                    'Diamond Bar': '(562) 846-2887'
+                                };
+                                const campus = new URLSearchParams(window.location.search).get('mode');
+                                document.write(phoneMap[campus] || phoneMap['Irvine']);
+                            </script>
+                        </li>
+                        <li>www.codingmind.com</li>
+                    </ul>
+                </div>
+
+                <script>
+                    const qrMap = {
+                        'Seattle': 'qr_seattle.png',
+                        'Arcadia': 'qr_arcadia.png',
+                        'Diamond Bar': 'qr_db.png',
+                        'Irvine': 'qr_code.png'
+                    };
+                    // campus = org.startsWith('https') ? 'Irvine' : org;
+                    document.querySelector('#cn .qr-code').src = '/static/' + qrMap[campus];
+                </script>
+                <img class="qr-code" />
+
+
+            </div>
+        </footer>
+    </div>
+
+    <!-- English Version -->
+    <div id="en" class="page">
+        <img class="logo" src="static/cm logo.png" />
+
+        <div class="flex justify-between place-items-end">
             <div>
-                <h4 class="blue"><script>document.write(mode.startsWith('https') ? 'Irvine' : mode);</script>校区</h4>
-                <ul>
-                    <li><script>document.write(addressMap[org] || addressMap['Irvine']);</script></li>
-                    <li>(949) 236-7896</li>
-                    <li>www.codingmind.com</li>
-                </ul>
+                <h1><i>Hello</i></h1>
+                <h1 class="blue"><i>
+                        <script>document.write(new URLSearchParams(window.location.search).get('name'))</script>
+                    </i></h1>
+                <div class="mt-12"></div>
             </div>
 
-            <img class="qr-code" src="static/qr_code.png"/>
+            <img class="primary" src="static/key.png" />
         </div>
-    </footer>
 
-    
+        <h2>Trial Class <span class="blue">Confirmed</span></h2>
+        <h2>You're One Step Closer to</h2>
+        <h2><span class="blue">Unlocking Top Schools and AI</span></h2>
+
+        <div class="bubble">
+            <h3>Trial Class <span class="blue">Details</span></h3>
+            <table class="mt-12">
+                <tr>
+                    <td class="field-header">Student:</td>
+                    <td class="field-value">
+                        <script>document.write(new URLSearchParams(window.location.search).get('name'))</script>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field-header">Course:</td>
+                    <td class="field-value">
+                        <script>document.write(new URLSearchParams(window.location.search).get('course'))</script>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field-header">Instructor:</td>
+                    <td class="field-value">
+                        <script>document.write(new URLSearchParams(window.location.search).get('instructor'))</script>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field-header">Date:</td>
+                    <td class="field-value">
+                        <script>
+                            const datetimeStrEn = new URLSearchParams(window.location.search).get('datetime');
+                            const formatDateTime = (str) => {
+                                if (!str) return '';
+                                const parts = str.split(' ');
+                                const date = parts[0];
+                                const time = parts[1] ? decodeURIComponent(parts[1]) : '';
+                                const numbers = date.match(/\d+/g);
+                                if (numbers && numbers.length >= 3) {
+                                    const [year, month, day] = numbers;
+                                    const formattedMonth = month.padStart(2, '0');
+                                    const formattedDay = day.padStart(2, '0');
+                                    return time ? `${formattedMonth}/${formattedDay}/${year} ${time}` : `${formattedMonth}/${formattedDay}/${year}`;
+                                }
+                                return str;
+                            }
+                            document.write(formatDateTime(datetimeStrEn));
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field-header">Mode:</td>
+                    <td class="field-value">
+                        <script>
+                            const modeEn = new URLSearchParams(window.location.search).get('mode');
+                            document.write(modeEn.startsWith('https') ? 'Zoom' : modeEn + ' Campus In-person');
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field-header">Address:</td>
+                    <td class="field-value">
+                        <script>
+                            const addressMapEn = {
+                                'Irvine': '920 Roosevelt #200, Irvine, CA',
+                                'Seattle': '4006 148th Ave NE, Redmond, WA 98052',
+                                'Arcadia': '1010 S Baldwin Ave #202, Arcadia, CA 91007',
+                                'Diamond Bar': '21308 Pathfinder Rd, Unit 206, Diamond Bar, CA 91765',
+                            };
+                            const orgEn = new URLSearchParams(window.location.search).get('mode');
+                            document.write(addressMapEn[orgEn] || orgEn);
+                        </script>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <footer>
+            <div class="flex justify-between">
+                <div>
+                    <h4 class="blue">
+                        <script>document.write(modeEn.startsWith('https') ? 'Irvine' : modeEn);</script> Campus
+                    </h4>
+                    <ul>
+                        <li>
+                            <script>document.write(addressMapEn[orgEn] || addressMapEn['Irvine']);</script>
+                        </li>
+                        <li>
+                            <script>
+                                document.write(phoneMap[campus] || phoneMap['Irvine']);
+                            </script>
+                        </li>
+                        <li>www.codingmind.com</li>
+                    </ul>
+                </div>
+
+                <img class="qr-code" src="static/qr_code.png" />
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        window.onload = function () {
+            const qrMap = {
+                'Seattle': 'qr_seattle.png',
+                'Arcadia': 'qr_arcadia.png',
+                'Diamond Bar': 'qr_db.png',
+                'Irvine': 'qr_code.png'
+            };
+            const org = new URLSearchParams(window.location.search).get('mode');
+            //campus = org.startsWith('https') ? 'Irvine' : org;
+            document.querySelector('#cn .qr-code').src = 'static/' + qrMap[campus];
+            document.querySelector('#en .qr-code').src = 'static/' + qrMap[campus];
+        }
+
+        function captureAndDownload(lang) {
+            // Hide the buttons before capturing
+            const buttons = document.querySelector('.fixed');
+            buttons.style.visibility = 'hidden';
+
+            html2canvas(document.getElementById(lang)).then(function (canvas) {
+                // Show the buttons again
+                buttons.style.visibility = 'visible';
+
+                const link = document.createElement('a');
+                link.download = `trial-class-${lang}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    </script>
 
     <style>
-        
         @font-face {
             font-family: "DouYu";
             src: url("static/douyuFont-2.otf") format("opentype");
         }
-    
+
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .page {
+            padding: 7rem;
+            position: relative;
+            min-height: 100vh;
+            page-break-after: always;
+        }
+
         h1 {
             font-size: 120px;
             font-weight: 700;
             line-height: 100px;
         }
+
         h2 {
             font-size: 70px;
             font-weight: 700;
             line-height: 80px;
             font-family: "DouYu", sans-serif;
         }
+
         h3 {
             font-size: 50px;
             font-weight: 700;
         }
+
         h4 {
             font-size: 30px;
             font-weight: bold;
         }
+
         body {
             font-family: "Outfit", serif;
         }
+
         .qr-code {
             height: 225px;
         }
+
         .logo {
             height: 75px;
         }
+
         .primary {
             height: 525px;
         }
-        html {
-            padding: 7rem;
-        }
+
         .blue {
             color: #03A9F4
         }
+
         .bubble {
             border-radius: 75px;
             border-bottom-left-radius: 0px;
@@ -156,12 +359,18 @@
             margin-top: 6rem;
             margin-bottom: 6rem;
         }
+
+        #en .bubble {
+            margin-bottom: calc(6rem + 13vh);
+        }
+
         table {
             border-spacing: 0;
             border-collapse: collapse;
             table-layout: fixed;
             width: 100%;
         }
+
         .field-header {
             font-weight: 600;
             font-size: 30px;
@@ -171,6 +380,7 @@
             margin: 0;
             white-space: nowrap;
         }
+
         .field-value {
             font-weight: 300;
             font-size: 30px;
@@ -181,12 +391,13 @@
             white-space: normal;
             word-break: break-word;
         }
+
         tr {
             padding: 0;
             margin: 0;
             display: table-row;
         }
-        
+
         td {
             padding: 0;
             margin: 0;
@@ -198,15 +409,31 @@
             font-weight: 400;
             font-size: 30px;
         }
+
         ul {
             margin-left: 3rem;
             width: 50%;
         }
+
         footer {
             width: 77%;
             position: absolute;
-            bottom:8rem;
+            bottom: 8rem;
         }
 
+        #en h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+        }
+
+        #en h2 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 750;
+            letter-spacing: 0.07em;
+            margin-bottom: 0.000001em;
+        }
     </style>
+</body>
+
 </html>
