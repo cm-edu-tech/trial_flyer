@@ -9,6 +9,104 @@
         rel="stylesheet">
     <link href="https://fonts.font.im/css?family=Noto+Sans+SC:400,700" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+
+        const qrMap = {
+            'Seattle': 'qr_seattle.png',
+            'Arcadia': 'qr_arcadia.png',
+            'Diamond Bar': 'qr_db.png',
+            'Irvine': 'qr_code.png'
+        };
+
+        const addressMap = {
+            'Irvine': '920 Roosevelt #200, Irvine, CA',
+            'Seattle': '4006 148th Ave NE, Redmond, WA 98052',
+            'Arcadia': '1010 S Baldwin Ave #202, Arcadia, CA 91007',
+            'Diamond Bar': '21308 Pathfinder Rd, Unit 206, Diamond Bar, CA 91765',
+        };
+
+        const phoneMap = {
+            'Irvine': '(949) 236-7896',
+            'Seattle': '(949) 236-7896',
+            'Arcadia': '(626) 620-2728',
+            'Diamond Bar': '(562) 846-2887'
+        };
+
+        function getUrlParam(name) {
+            return new URLSearchParams(window.location.search).get(name) || '';
+        }
+
+        function getCampus() {
+            const mode = getUrlParam('mode');
+            return mode.startsWith('https') ? 'Irvine' : mode;
+        }
+
+        // Helper function for date formatting
+        function formatDateTime(str) {
+            if (!str) return '';
+            const parts = str.split(' ');
+            const date = parts[0];
+            const time = parts[1] ? decodeURIComponent(parts[1]) : '';
+            const numbers = date.match(/\d+/g);
+            if (numbers && numbers.length >= 3) {
+                const [year, month, day] = numbers;
+                const formattedMonth = month.padStart(2, '0');
+                const formattedDay = day.padStart(2, '0');
+                return time ? `${formattedMonth}/${formattedDay}/${year} ${time}` : `${formattedMonth}/${formattedDay}/${year}`;
+            }
+            return str;
+        }
+
+        window.onload = function() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const mode = urlParams.get('mode') || 'Irvine';
+                const campus = mode.startsWith('https') ? 'Irvine' : mode;
+                
+                // Get QR code elements
+                const cnQrCode = document.querySelector('#cn .qr-code');
+                const enQrCode = document.querySelector('#en .qr-code');
+                
+                // Set QR code sources if elements exist
+                if (cnQrCode) {
+                    cnQrCode.src = 'static/' + (qrMap[campus] || qrMap['Irvine']);
+                }
+                if (enQrCode) {
+                    enQrCode.src = 'static/' + (qrMap[campus] || qrMap['Irvine']);
+                }
+            } catch (error) {
+                console.error('Error setting QR codes:', error);
+            }
+        };
+
+        function captureAndDownload(lang) {
+            // Hide the buttons before capturing
+            const buttons = document.querySelector('.fixed');
+            if (buttons) {
+                buttons.style.visibility = 'hidden';
+            }
+
+            const element = document.getElementById(lang);
+            if (element) {
+                html2canvas(element).then(function(canvas) {
+                    // Show the buttons again
+                    if (buttons) {
+                        buttons.style.visibility = 'visible';
+                    }
+
+                    const link = document.createElement('a');
+                    link.download = `trial-class-${lang}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                }).catch(function(error) {
+                    console.error('Error capturing page:', error);
+                    if (buttons) {
+                        buttons.style.visibility = 'visible';
+                    }
+                });
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -29,7 +127,7 @@
             <div>
                 <h1><i>Hello</i></h1>
                 <h1 class="blue"><i>
-                        <script>document.write(new URLSearchParams(window.location.search).get('name'))</script>
+                        <script>document.write(getUrlParam('name'))</script>
                     </i></h1>
                 <div class="mt-12"></div>
             </div>
@@ -47,32 +145,32 @@
                 <tr>
                     <td class="field-header">学生姓名:</td>
                     <td class="field-value">
-                        <script>document.write(new URLSearchParams(window.location.search).get('name'))</script>
+                        <script>document.write(getUrlParam('name'))</script>
                     </td>
                 </tr>
                 <tr>
                     <td class="field-header">课程名称:</td>
                     <td class="field-value">
-                        <script>document.write(new URLSearchParams(window.location.search).get('course'))</script>
+                        <script>document.write(getUrlParam('course'))</script>
                     </td>
                 </tr>
                 <tr>
                     <td class="field-header">老师姓名:</td>
                     <td class="field-value">
-                        <script>document.write(new URLSearchParams(window.location.search).get('instructor'))</script>
+                        <script>document.write(getUrlParam('instructor'))</script>
                     </td>
                 </tr>
                 <tr>
                     <td class="field-header">日期时间:</td>
                     <td class="field-value">
-                        <script>document.write(new URLSearchParams(window.location.search).get('datetime'))</script>
+                        <script>document.write(getUrlParam('datetime'))</script>
                     </td>
                 </tr>
                 <tr>
                     <td class="field-header">试课方式:</td>
                     <td class="field-value">
                         <script>
-                            const mode = new URLSearchParams(window.location.search).get('mode');
+                            const mode = getUrlParam('mode');
                             document.write(mode.startsWith('https') ? 'Zoom' : mode + '校区线下');
                         </script>
                     </td>
@@ -81,14 +179,7 @@
                     <td class="field-header">试课地址:</td>
                     <td class="field-value">
                         <script>
-                            const addressMap = {
-                                'Irvine': '920 Roosevelt #200, Irvine, CA',
-                                'Seattle': '4006 148th Ave NE, Redmond, WA 98052',
-                                'Arcadia': '1010 S Baldwin Ave #202, Arcadia, CA 91007',
-                                'Diamond Bar': '21308 Pathfinder Rd, Unit 206, Diamond Bar, CA 91765',
-                            };
-                            const org = new URLSearchParams(window.location.search).get('mode');
-                            document.write(addressMap[org] || org);
+                            document.write(addressMap[getCampus()] || addressMap['Irvine']);
                         </script>
                     </td>
                 </tr>
@@ -99,38 +190,22 @@
             <div class="flex justify-between">
                 <div>
                     <h4 class="blue">
-                        <script>document.write(mode.startsWith('https') ? 'Irvine' : mode);</script>校区
+                        <script>document.write(getCampus());</script>校区
                     </h4>
                     <ul>
                         <li>
-                            <script>document.write(addressMap[org] || addressMap['Irvine']);</script>
+                            <script>
+                                document.write(addressMap[getCampus()] || addressMap['Irvine']);
+                            </script>
                         </li>
                         <li>
                             <script>
-                                const phoneMap = {
-                                    'Irvine': '(949) 236-7896',
-                                    'Seattle': '(949) 236-7896',
-                                    'Arcadia': '(626) 620-2728',
-                                    'Diamond Bar': '(562) 846-2887'
-                                };
-                                const campus = new URLSearchParams(window.location.search).get('mode');
-                                document.write(phoneMap[campus] || phoneMap['Irvine']);
+                                document.write(phoneMap[getCampus()] || phoneMap['Irvine']);
                             </script>
                         </li>
                         <li>www.codingmind.com</li>
                     </ul>
                 </div>
-
-                <script>
-                    const qrMap = {
-                        'Seattle': 'qr_seattle.png',
-                        'Arcadia': 'qr_arcadia.png',
-                        'Diamond Bar': 'qr_db.png',
-                        'Irvine': 'qr_code.png'
-                    };
-                    // campus = org.startsWith('https') ? 'Irvine' : org;
-                    document.querySelector('#cn .qr-code').src = '/static/' + qrMap[campus];
-                </script>
                 <img class="qr-code" />
 
 
@@ -146,7 +221,7 @@
             <div>
                 <h1><i>Hello</i></h1>
                 <h1 class="blue"><i>
-                        <script>document.write(new URLSearchParams(window.location.search).get('name'))</script>
+                        <script>document.write(getUrlParam('name'))</script>
                     </i></h1>
                 <div class="mt-12"></div>
             </div>
@@ -164,40 +239,26 @@
                 <tr>
                     <td class="field-header">Student:</td>
                     <td class="field-value">
-                        <script>document.write(new URLSearchParams(window.location.search).get('name'))</script>
+                        <script>document.write(getUrlParam('name'))</script>
                     </td>
                 </tr>
                 <tr>
                     <td class="field-header">Course:</td>
                     <td class="field-value">
-                        <script>document.write(new URLSearchParams(window.location.search).get('course'))</script>
+                        <script>document.write(getUrlParam('course'))</script>
                     </td>
                 </tr>
                 <tr>
                     <td class="field-header">Instructor:</td>
                     <td class="field-value">
-                        <script>document.write(new URLSearchParams(window.location.search).get('instructor'))</script>
+                        <script>document.write(getUrlParam('instructor'))</script>
                     </td>
                 </tr>
                 <tr>
                     <td class="field-header">Date:</td>
                     <td class="field-value">
                         <script>
-                            const datetimeStrEn = new URLSearchParams(window.location.search).get('datetime');
-                            const formatDateTime = (str) => {
-                                if (!str) return '';
-                                const parts = str.split(' ');
-                                const date = parts[0];
-                                const time = parts[1] ? decodeURIComponent(parts[1]) : '';
-                                const numbers = date.match(/\d+/g);
-                                if (numbers && numbers.length >= 3) {
-                                    const [year, month, day] = numbers;
-                                    const formattedMonth = month.padStart(2, '0');
-                                    const formattedDay = day.padStart(2, '0');
-                                    return time ? `${formattedMonth}/${formattedDay}/${year} ${time}` : `${formattedMonth}/${formattedDay}/${year}`;
-                                }
-                                return str;
-                            }
+                            const datetimeStrEn = getUrlParam('datetime');
                             document.write(formatDateTime(datetimeStrEn));
                         </script>
                     </td>
@@ -206,7 +267,7 @@
                     <td class="field-header">Mode:</td>
                     <td class="field-value">
                         <script>
-                            const modeEn = new URLSearchParams(window.location.search).get('mode');
+                            const modeEn = getUrlParam('mode');
                             document.write(modeEn.startsWith('https') ? 'Zoom' : modeEn + ' Campus In-person');
                         </script>
                     </td>
@@ -215,14 +276,7 @@
                     <td class="field-header">Address:</td>
                     <td class="field-value">
                         <script>
-                            const addressMapEn = {
-                                'Irvine': '920 Roosevelt #200, Irvine, CA',
-                                'Seattle': '4006 148th Ave NE, Redmond, WA 98052',
-                                'Arcadia': '1010 S Baldwin Ave #202, Arcadia, CA 91007',
-                                'Diamond Bar': '21308 Pathfinder Rd, Unit 206, Diamond Bar, CA 91765',
-                            };
-                            const orgEn = new URLSearchParams(window.location.search).get('mode');
-                            document.write(addressMapEn[orgEn] || orgEn);
+                            document.write(addressMap[getCampus()] || getCampus());
                         </script>
                     </td>
                 </tr>
@@ -233,57 +287,28 @@
             <div class="flex justify-between">
                 <div>
                     <h4 class="blue">
-                        <script>document.write(modeEn.startsWith('https') ? 'Irvine' : modeEn);</script> Campus
+                        <script>document.write(getCampus());</script> Campus
                     </h4>
                     <ul>
                         <li>
-                            <script>document.write(addressMapEn[orgEn] || addressMapEn['Irvine']);</script>
+                            <script>document.write(addressMap[getCampus()] || getCampus());</script>
                         </li>
                         <li>
                             <script>
-                                document.write(phoneMap[campus] || phoneMap['Irvine']);
+                                document.write(phoneMap[getCampus()] || phoneMap['Irvine']);
                             </script>
                         </li>
                         <li>www.codingmind.com</li>
                     </ul>
                 </div>
 
-                <img class="qr-code" src="static/qr_code.png" />
+                <img class="qr-code" />
             </div>
         </footer>
     </div>
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script>
-        window.onload = function () {
-            const qrMap = {
-                'Seattle': 'qr_seattle.png',
-                'Arcadia': 'qr_arcadia.png',
-                'Diamond Bar': 'qr_db.png',
-                'Irvine': 'qr_code.png'
-            };
-            const org = new URLSearchParams(window.location.search).get('mode');
-            //campus = org.startsWith('https') ? 'Irvine' : org;
-            document.querySelector('#cn .qr-code').src = 'static/' + qrMap[campus];
-            document.querySelector('#en .qr-code').src = 'static/' + qrMap[campus];
-        }
 
-        function captureAndDownload(lang) {
-            // Hide the buttons before capturing
-            const buttons = document.querySelector('.fixed');
-            buttons.style.visibility = 'hidden';
-
-            html2canvas(document.getElementById(lang)).then(function (canvas) {
-                // Show the buttons again
-                buttons.style.visibility = 'visible';
-
-                const link = document.createElement('a');
-                link.download = `trial-class-${lang}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-        }
-    </script>
 
     <style>
         @font-face {
