@@ -127,7 +127,11 @@
             <div>
                 <h1><i>Hello</i></h1>
                 <h1 class="blue"><i>
-                        <script>document.write(getUrlParam('name'))</script>
+                        <script>
+                            const fullName = getUrlParam('name');
+                            const firstName = fullName.split(' ')[0];
+                            document.write(firstName);
+                        </script>
                     </i></h1>
                 <div class="mt-12"></div>
             </div>
@@ -221,7 +225,9 @@
             <div>
                 <h1><i>Hello</i></h1>
                 <h1 class="blue"><i>
-                        <script>document.write(getUrlParam('name'))</script>
+                    <script>
+                        document.write(firstName);
+                    </script>
                     </i></h1>
                 <div class="mt-12"></div>
             </div>
