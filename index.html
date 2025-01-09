@@ -41,6 +41,18 @@
             return mode.startsWith('https') ? 'Irvine' : mode;
         }
 
+        function getAddress() {
+            const mode = getUrlParam('mode');
+            const org = getUrlParam('org');
+            
+            if (mode.startsWith('https')) {
+                let zoomLink = decodeURIComponent(mode);
+                return zoomLink;
+            }
+            
+            return addressMap[org] || addressMap['Irvine'];
+        }
+
         // Helper function for date formatting
         function formatDateTime(str) {
             if (!str) return '';
@@ -183,7 +195,7 @@
                     <td class="field-header">试课地址:</td>
                     <td class="field-value">
                         <script>
-                            document.write(addressMap[getCampus()] || addressMap['Irvine']);
+                            document.write(getAddress());
                         </script>
                     </td>
                 </tr>
@@ -194,17 +206,20 @@
             <div class="flex justify-between">
                 <div>
                     <h4 class="blue">
-                        <script>document.write(getCampus());</script>校区
+                        <script>
+                            const org = getUrlParam('org');
+                            document.write(org);
+                        </script>校区
                     </h4>
                     <ul>
                         <li>
                             <script>
-                                document.write(addressMap[getCampus()] || addressMap['Irvine']);
+                                document.write(addressMap[org]);
                             </script>
                         </li>
                         <li>
                             <script>
-                                document.write(phoneMap[getCampus()] || phoneMap['Irvine']);
+                                document.write(phoneMap[org]);
                             </script>
                         </li>
                         <li>www.codingmind.com</li>
@@ -282,7 +297,7 @@
                     <td class="field-header">Address:</td>
                     <td class="field-value">
                         <script>
-                            document.write(addressMap[getCampus()] || getCampus());
+                            document.write(getAddress());
                         </script>
                     </td>
                 </tr>
@@ -293,15 +308,18 @@
             <div class="flex justify-between">
                 <div>
                     <h4 class="blue">
-                        <script>document.write(getCampus());</script> Campus
+                        
+                        <script>
+                            document.write(org);
+                        </script> Campus
                     </h4>
                     <ul>
                         <li>
-                            <script>document.write(addressMap[getCampus()] || getCampus());</script>
+                            <script>document.write(addressMap[org]);</script>
                         </li>
                         <li>
                             <script>
-                                document.write(phoneMap[getCampus()] || phoneMap['Irvine']);
+                                document.write(phoneMap[org]);
                             </script>
                         </li>
                         <li>www.codingmind.com</li>
