@@ -36,11 +36,6 @@
             return new URLSearchParams(window.location.search).get(name) || '';
         }
 
-        function getCampus() {
-            const mode = getUrlParam('mode');
-            return mode.startsWith('https') ? 'Irvine' : mode;
-        }
-
         function getAddress() {
             const mode = getUrlParam('mode');
             const org = getUrlParam('org');
@@ -48,9 +43,9 @@
             if (mode.startsWith('https')) {
                 let zoomLink = decodeURIComponent(mode);
                 return zoomLink;
+            } else {
+                return addressMap[org] || addressMap['Irvine'];
             }
-            
-            return addressMap[org] || addressMap['Irvine'];
         }
 
         // Helper function for date formatting
@@ -100,7 +95,12 @@
 
             const element = document.getElementById(lang);
             if (element) {
-                html2canvas(element).then(function(canvas) {
+                html2canvas(element, {
+                    useCORS: true, // Support for cross-origin images
+                    logging: true, // Debug any issues
+                    windowWidth: 720,  // Pretend the browser window is this wide
+                    windowHeight: 1080,  // Pretend the browser window is this tall
+                }).then(function(canvas) {
                     // Show the buttons again
                     if (buttons) {
                         buttons.style.visibility = 'visible';
@@ -251,32 +251,32 @@
         </div>
 
         <h2>Trial Class <span class="blue">Confirmed</span></h2>
-        <h2>You're One Step Closer to</h2>
-        <h2><span class="blue">Unlocking Top Schools and AI</span></h2>
+        <br>
+        <h2>You're One Step Closer to <span class="blue">Unlocking Top Schools and AI</span></h2>
 
         <div class="bubble">
             <h3>Trial Class <span class="blue">Details</span></h3>
             <table class="mt-12">
                 <tr>
-                    <td class="field-header">Student:</td>
+                    <td class="field-header">Student</td>
                     <td class="field-value">
                         <script>document.write(getUrlParam('name'))</script>
                     </td>
                 </tr>
                 <tr>
-                    <td class="field-header">Course:</td>
+                    <td class="field-header">Course</td>
                     <td class="field-value">
                         <script>document.write(getUrlParam('course'))</script>
                     </td>
                 </tr>
                 <tr>
-                    <td class="field-header">Instructor:</td>
+                    <td class="field-header">Instructor</td>
                     <td class="field-value">
                         <script>document.write(getUrlParam('instructor'))</script>
                     </td>
                 </tr>
                 <tr>
-                    <td class="field-header">Date:</td>
+                    <td class="field-header">Date</td>
                     <td class="field-value">
                         <script>
                             const datetimeStrEn = getUrlParam('datetime');
@@ -285,7 +285,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="field-header">Mode:</td>
+                    <td class="field-header">Mode</td>
                     <td class="field-value">
                         <script>
                             const modeEn = getUrlParam('mode');
@@ -294,7 +294,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="field-header">Address:</td>
+                    <td class="field-header">Address</td>
                     <td class="field-value">
                         <script>
                             document.write(getAddress());
@@ -308,10 +308,7 @@
             <div class="flex justify-between">
                 <div>
                     <h4 class="blue">
-                        
-                        <script>
-                            document.write(org);
-                        </script> Campus
+                        <script>document.write(org);</script> Campus
                     </h4>
                     <ul>
                         <li>
