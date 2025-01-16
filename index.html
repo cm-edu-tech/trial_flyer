@@ -450,15 +450,23 @@
             display: table-cell;
         }
 
-        li {
-            list-style-type: circle;
+        ul {
+            list-style-position: outside;
+            position: relative;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 20px; /* Adjust this if needed */
             font-weight: 400;
             font-size: 30px;
         }
 
-        ul {
-            margin-left: 3rem;
-            width: 50%;
+        ul li::before {
+            content: "\2022"; /* Replace this with the desired bullet character. */
+            position: absolute;
+            left: 0;
+            top: 5px; /* Move the bullet 5 pixels lower. When taking a picture, for some reason the bullet point is too high up. */
         }
 
         footer {
