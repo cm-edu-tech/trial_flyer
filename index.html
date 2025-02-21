@@ -20,7 +20,15 @@
         };
 
         const addressMap = {
-            'Irvine': '920 Roosevelt, Ste 200, 2nd Floor, Irvine, CA',
+            'Irvine': '920 Roosevelt, Ste 200\n2nd Floor, Irvine, CA',
+            'Seattle': '4006 148th Ave NE, Redmond, WA 98052',
+            'Arcadia': '1010 S Baldwin Ave #202, Arcadia, CA 91007',
+            'Diamond Bar': '21308 Pathfinder Rd, Unit 206, Diamond Bar, CA 91765',
+            'Bothell': '18120 97Th Ave Ne, Bothell, WA 98011'
+        };
+
+        const cnAddressMap = {
+            'Irvine': '920 Roosevelt, Ste 200<br>二楼, Irvine, CA',
             'Seattle': '4006 148th Ave NE, Redmond, WA 98052',
             'Arcadia': '1010 S Baldwin Ave #202, Arcadia, CA 91007',
             'Diamond Bar': '21308 Pathfinder Rd, Unit 206, Diamond Bar, CA 91765',
@@ -39,7 +47,7 @@
             return new URLSearchParams(window.location.search).get(name) || '';
         }
 
-        function getAddress() {
+        function getAddress(isChinese = false) {
             const mode = getUrlParam('mode');
             const org = getUrlParam('org');
             
@@ -47,6 +55,11 @@
                 let zoomLink = decodeURIComponent(mode);
                 return zoomLink;
             } else {
+                if (isChinese) {
+                    return cnAddressMap[org] || cnAddressMap['Irvine'];
+                } else {
+                    return addressMap[org] || addressMap['Irvine'];
+                }
                 return addressMap[org] || addressMap['Irvine'];
             }
         }
@@ -198,7 +211,7 @@
                     <td class="field-header">试课地址:</td>
                     <td class="field-value">
                         <script>
-                            document.write(getAddress());
+                            document.write(getAddress(true));
                         </script>
                     </td>
                 </tr>
@@ -217,7 +230,7 @@
                     <ul>
                         <li>
                             <script>
-                                document.write(addressMap[org]);
+                                document.write(getAddress(true));
                             </script>
                         </li>
                         <li>
