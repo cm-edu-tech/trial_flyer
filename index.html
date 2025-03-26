@@ -119,7 +119,7 @@
                     useCORS: true, // Support for cross-origin images
                     logging: true, // Debug any issues
                     windowWidth: 1080,  // Pretend the browser window is this wide
-                    windowHeight: 1920,  // Pretend the browser window is this tall
+                    windowHeight: 2100,  // Pretend the browser window is this tall
                 }).then(function(canvas) {
                     // Show the buttons again
                     if (buttons) {
@@ -245,7 +245,9 @@
                         <li>www.codingmind.com</li>
                     </ul>
                 </div>
-                <img class="qr-code" />
+                <div style="width: 225px; height: 225px; flex-shrink: 0;">
+                    <img class="qr-code" />
+                </div>
 
 
             </div>
@@ -342,8 +344,11 @@
                         <li>www.codingmind.com</li>
                     </ul>
                 </div>
+                <div style="width: 225px; height: 225px; flex-shrink: 0;">
+                    <img class="qr-code" />
+                </div>
+                
 
-                <img class="qr-code" />
             </div>
         </footer>
     </div>
@@ -352,6 +357,7 @@
 
 
     <style>
+
         @font-face {
             font-family: "DouYu";
             src: url("static/douyuFont-2.otf") format("opentype");
@@ -506,6 +512,12 @@
             font-weight: 750;
             letter-spacing: 0.07em;
             margin-bottom: 0.000001em;
+        }
+        .qr-code {
+            width: 225px;
+            height: 225px;
+            object-fit: contain;
+            display: block;
         }
     </style>
 </body>
