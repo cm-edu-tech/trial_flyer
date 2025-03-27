@@ -54,7 +54,7 @@
         function getAddress(isChinese = false) {
             const mode = getUrlParam('mode');
             const org = getUrlParam('org');
-            
+
             if (mode.startsWith('https')) {
                 let zoomLink = decodeURIComponent(mode);
                 return zoomLink;
@@ -84,16 +84,16 @@
             return str;
         }
 
-        window.onload = function() {
+        window.onload = function () {
             try {
                 const urlParams = new URLSearchParams(window.location.search);
                 const mode = urlParams.get('mode') || 'Irvine';
                 const campus = mode.startsWith('https') ? 'Irvine' : mode;
-                
+
                 // Get QR code elements
                 const cnQrCode = document.querySelector('#cn .qr-code');
                 const enQrCode = document.querySelector('#en .qr-code');
-                
+
                 // Set QR code sources if elements exist
                 if (cnQrCode) {
                     cnQrCode.src = 'static/' + (qrMap[campus] || qrMap['Irvine']);
@@ -120,7 +120,7 @@
                     logging: true, // Debug any issues
                     windowWidth: 1080,  // Pretend the browser window is this wide
                     windowHeight: 2030,  // Pretend the browser window is this tall
-                }).then(function(canvas) {
+                }).then(function (canvas) {
                     // Show the buttons again
                     if (buttons) {
                         buttons.style.visibility = 'visible';
@@ -130,7 +130,7 @@
                     link.download = `trial-class-${lang}.png`;
                     link.href = canvas.toDataURL('image/png');
                     link.click();
-                }).catch(function(error) {
+                }).catch(function (error) {
                     console.error('Error capturing page:', error);
                     if (buttons) {
                         buttons.style.visibility = 'visible';
@@ -153,211 +153,228 @@
 
     <!-- Chinese Version -->
     <div id="cn" class="page">
-        <img class="logo" src="static/cm logo.png" />
+        <div class="page-content">
+            <div class="header-section">
+                <img class="logo" src="static/cm logo.png" />
 
-        <div class="flex justify-between place-items-end">
-            <div>
-                <h1><i>Hello</i></h1>
-                <h1 class="blue"><i>
-                        <script>
-                            const fullName = getUrlParam('name');
-                            const firstName = fullName.split(' ')[0];
-                            document.write(firstName);
-                        </script>
-                    </i></h1>
-                <div class="mt-12"></div>
-            </div>
+                <div class="flex justify-between place-items-end">
+                    <div>
+                        <h1><i>Hello</i></h1>
+                        <h1 class="blue"><i>
+                                <script>
+                                    const fullName = getUrlParam('name');
+                                    const firstName = fullName.split(' ')[0];
+                                    document.write(firstName);
+                                </script>
+                            </i></h1>
+                        <div class="mt-12"></div>
+                    </div>
 
-            <img class="primary" src="static/key.png" />
-        </div>
-
-        <h2>试课<span class="blue">已确认</span></h2>
-        <h2>你离<span class="blue">解锁名校和AI</span></h2>
-        <h2>又近了一步</h2>
-
-        <div class="bubble">
-            <h3>试课 <span class="blue">详情</span></h3>
-            <table class="mt-12">
-                <tr>
-                    <td class="field-header">学生姓名:</td>
-                    <td class="field-value">
-                        <script>document.write(getUrlParam('name'))</script>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="field-header">课程名称:</td>
-                    <td class="field-value">
-                        <script>document.write(getUrlParam('course'))</script>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="field-header">老师姓名:</td>
-                    <td class="field-value">
-                        <script>document.write(getUrlParam('instructor'))</script>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="field-header">日期时间:</td>
-                    <td class="field-value">
-                        <script>document.write(getUrlParam('datetime'))</script>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="field-header">试课方式:</td>
-                    <td class="field-value">
-                        <script>
-                            const mode = getUrlParam('mode');
-                            document.write(mode.startsWith('https') ? 'Zoom' : mode + '校区线下');
-                        </script>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="field-header">试课地址:</td>
-                    <td class="field-value">
-                        <script>
-                            document.write(getAddress(true));
-                        </script>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <footer>
-            <div class="flex justify-between">
-                <div>
-                    <h4 class="blue">
-                        <script>
-                            const org = getUrlParam('org');
-                            document.write(org);
-                        </script>校区
-                    </h4>
-                    <ul>
-                        <li>
-                            <script>
-                                document.write(getAddress(true));
-                            </script>
-                        </li>
-                        <li>
-                            <script>
-                                document.write(phoneMap[org]);
-                            </script>
-                        </li>
-                        <li>www.codingmind.com</li>
-                    </ul>
-                </div>
-                <div style="width: 225px; height: 225px; flex-shrink: 0;">
-                    <img class="qr-code" />
+                    <img class="primary" src="static/key.png" />
                 </div>
 
-
+                <h2>试课<span class="blue">已确认</span></h2>
+                <h2>你离<span class="blue">解锁名校和AI</span></h2>
+                <h2>又近了一步</h2>
             </div>
-        </footer>
+
+            <div class="details-section">
+                <div class="bubble">
+                    <div class="bubble-content">
+                        <h3>试课 <span class="blue">详情</span></h3>
+                        <table>
+                            <tr>
+                                <td class="field-header">学生姓名:</td>
+                                <td class="field-value">
+                                    <script>document.write(getUrlParam('name'))</script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field-header">课程名称:</td>
+                                <td class="field-value">
+                                    <script>document.write(getUrlParam('course'))</script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field-header">老师姓名:</td>
+                                <td class="field-value">
+                                    <script>document.write(getUrlParam('instructor'))</script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field-header">日期时间:</td>
+                                <td class="field-value">
+                                    <script>document.write(getUrlParam('datetime'))</script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field-header">试课方式:</td>
+                                <td class="field-value">
+                                    <script>
+                                        const mode = getUrlParam('mode');
+                                        document.write(mode.startsWith('https') ? 'Zoom' : mode + '校区线下');
+                                    </script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field-header">试课地址:</td>
+                                <td class="field-value">
+                                    <script>
+                                        document.write(getAddress(true));
+                                    </script>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-2 md:h-4 lg:h-6"></div>
+
+            <footer>
+                <div class="flex justify-between">
+                    <div>
+                        <h4 class="blue">
+                            <script>
+                                const org = getUrlParam('org');
+                                document.write(org);
+                            </script>校区
+                        </h4>
+                        <ul>
+                            <li>
+                                <script>
+                                    document.write(getAddress(true));
+                                </script>
+                            </li>
+                            <li>
+                                <script>
+                                    document.write(phoneMap[org]);
+                                </script>
+                            </li>
+                            <li>www.codingmind.com</li>
+                        </ul>
+                    </div>
+                    <div class="qr-code-container">
+                        <img class="qr-code" />
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+
     </div>
 
     <!-- English Version -->
     <div id="en" class="page">
-        <img class="logo" src="static/cm logo.png" />
+        <div class="page-content">
+            <div class="header-section">
+                <img class="logo" src="static/cm logo.png" />
 
-        <div class="flex justify-between place-items-end">
-            <div>
-                <h1><i>Hello</i></h1>
-                <h1 class="blue"><i>
-                    <script>
-                        document.write(firstName);
-                    </script>
-                    </i></h1>
-                <div class="mt-12"></div>
+                <div class="flex justify-between place-items-end">
+                    <div>
+                        <h1><i>Hello</i></h1>
+                        <h1 class="blue"><i>
+                                <script>
+                                    document.write(firstName);
+                                </script>
+                            </i></h1>
+                        <div class="mt-12"></div>
+                    </div>
+
+                    <img class="primary" src="static/key.png" />
+                </div>
+
+                <h2>Trial Class <span class="blue">Confirmed</span></h2>
+                <br>
+                <h2>You're One Step Closer to <span class="blue">Unlocking Top Schools and AI</span></h2>
             </div>
 
-            <img class="primary" src="static/key.png" />
-        </div>
-
-        <h2>Trial Class <span class="blue">Confirmed</span></h2>
-        <br>
-        <h2>You're One Step Closer to <span class="blue">Unlocking Top Schools and AI</span></h2>
-
-        <div class="bubble">
-            <h3>Trial Class <span class="blue">Details</span></h3>
-            <table class="mt-12">
-                <tr>
-                    <td class="field-header">Student</td>
-                    <td class="field-value">
-                        <script>document.write(getUrlParam('name'))</script>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="field-header">Course</td>
-                    <td class="field-value">
-                        <script>document.write(getUrlParam('course'))</script>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="field-header">Instructor</td>
-                    <td class="field-value">
-                        <script>document.write(getUrlParam('instructor'))</script>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="field-header">Date</td>
-                    <td class="field-value">
-                        <script>
-                            const datetimeStrEn = getUrlParam('datetime');
-                            document.write(formatDateTime(datetimeStrEn));
-                        </script>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="field-header">Mode</td>
-                    <td class="field-value">
-                        <script>
-                            const modeEn = getUrlParam('mode');
-                            document.write(modeEn.startsWith('https') ? 'Zoom' : modeEn + ' Campus In-person');
-                        </script>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="field-header">Address</td>
-                    <td class="field-value">
-                        <script>
-                            document.write(getAddress());
-                        </script>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <footer>
-            <div class="flex justify-between">
-                <div>
-                    <h4 class="blue">
-                        <script>document.write(org);</script> Campus
-                    </h4>
-                    <ul>
-                        <li>
-                            <script>document.write(addressMap[org]);</script>
-                        </li>
-                        <li>
-                            <script>
-                                document.write(phoneMap[org]);
-                            </script>
-                        </li>
-                        <li>www.codingmind.com</li>
-                    </ul>
+            <div class="details-section">
+                <div class="bubble">
+                    <div class="bubble-content">
+                        <h3>Trial Class <span class="blue">Details</span></h3>
+                        <table>
+                            <tr>
+                                <td class="field-header">Student</td>
+                                <td class="field-value">
+                                    <script>document.write(getUrlParam('name'))</script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field-header">Course</td>
+                                <td class="field-value">
+                                    <script>document.write(getUrlParam('course'))</script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field-header">Instructor</td>
+                                <td class="field-value">
+                                    <script>document.write(getUrlParam('instructor'))</script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field-header">Date</td>
+                                <td class="field-value">
+                                    <script>
+                                        const datetimeStrEn = getUrlParam('datetime');
+                                        document.write(formatDateTime(datetimeStrEn));
+                                    </script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field-header">Mode</td>
+                                <td class="field-value">
+                                    <script>
+                                        const modeEn = getUrlParam('mode');
+                                        document.write(modeEn.startsWith('https') ? 'Zoom' : modeEn + ' Campus In-person');
+                                    </script>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field-header">Address</td>
+                                <td class="field-value">
+                                    <script>
+                                        document.write(getAddress());
+                                    </script>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-                <div style="width: 225px; height: 225px; flex-shrink: 0;">
-                    <img class="qr-code" />
-                </div>
-                
-
             </div>
-        </footer>
+            <div class="h-2 md:h-4 lg:h-6"></div>
+
+            <footer>
+                <div class="flex justify-between">
+                    <div>
+                        <h4 class="blue">
+                            <script>document.write(org);</script> Campus
+                        </h4>
+                        <ul>
+                            <li>
+                                <script>document.write(addressMap[org]);</script>
+                            </li>
+                            <li>
+                                <script>
+                                    document.write(phoneMap[org]);
+                                </script>
+                            </li>
+                            <li>www.codingmind.com</li>
+                        </ul>
+                    </div>
+                    <div class="qr-code-container">
+                        <img class="qr-code" />
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 
     <style>
-
         @font-face {
             font-family: "DouYu";
             src: url("static/douyuFont-2.otf") format("opentype");
@@ -373,11 +390,50 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .page {
-            padding: 7rem;
+        .bubble {
+            border-radius: 75px;
+            border-bottom-left-radius: 0px;
+            background-color: #C0E9FC;
+            padding: 3rem;
+            margin-top: 6rem;
+            margin-bottom: 0; 
             position: relative;
-            min-height: 100vh;
-            page-break-after: always;
+        }
+
+        .bubble-content {
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            min-height: auto;
+        }
+
+        .page-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .details-section {
+            position: relative;
+            flex: 0 0 auto;
+        }
+
+        #cn footer {
+            width: 90%;
+            position: relative; 
+            margin: 6rem auto;
+            margin-top: 2rem !important;
+            z-index: 10;
+        }
+
+        #en footer{
+            width: 90%;
+            position: relative;
+            margin: 6rem auto;
+            margin-top: 2rem !important;
+
+            z-index: 10;
         }
 
         h1 {
@@ -407,33 +463,37 @@
             font-family: "Outfit", serif;
         }
 
-        .qr-code {
-            height: 225px;
-        }
-
         .logo {
             height: 75px;
+            width: auto;
+            object-fit: contain;
         }
 
         .primary {
             height: 525px;
+            width: auto;
+            object-fit: contain;
         }
 
         .blue {
             color: #03A9F4
         }
 
-        .bubble {
-            border-radius: 75px;
-            border-bottom-left-radius: 0px;
-            background-color: #C0E9FC;
-            padding: 3rem;
-            margin-top: 6rem;
-            margin-bottom: 6rem;
+        .qr-code-container {
+            width: 225px; 
+            height: 225px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        #en .bubble {
-            margin-bottom: calc(6rem + 13vh);
+        .qr-code {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
         }
 
         table {
@@ -458,16 +518,19 @@
             font-size: 30px;
             vertical-align: top;
             padding: 0;
-            margin: 0;
+            margin: 0 0 0.5rem 0;
             text-align: left;
             white-space: normal;
             word-break: break-word;
+            max-width: 600px;
+            overflow-wrap: break-word;
         }
 
         tr {
             padding: 0;
             margin: 0;
             display: table-row;
+            line-height: 1.5; 
         }
 
         td {
@@ -483,22 +546,16 @@
 
         ul li {
             position: relative;
-            padding-left: 20px; /* Adjust this if needed */
+            padding-left: 20px;
             font-weight: 400;
             font-size: 30px;
         }
 
         ul li::before {
-            content: "\2022"; /* Replace this with the desired bullet character. */
+            content: "\2022";
             position: absolute;
             left: 0;
-            top: 5px; /* Move the bullet 5 pixels lower. When taking a picture, for some reason the bullet point is too high up. */
-        }
-
-        footer {
-            width: 77%;
-            position: absolute;
-            bottom: 8rem;
+            top: 5px;
         }
 
         #en h1 {
@@ -513,11 +570,18 @@
             letter-spacing: 0.07em;
             margin-bottom: 0.000001em;
         }
-        .qr-code {
-            width: 225px;
-            height: 225px;
-            object-fit: contain;
-            display: block;
+
+        .page {
+            padding: 7rem;
+            position: relative;
+            min-height: 100vh;
+            page-break-after: always;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-section {
+            margin-bottom: 2rem;
         }
     </style>
 </body>
