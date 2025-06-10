@@ -88,6 +88,20 @@
             return str;
         }
 
+        function changeBothellLocation(newOrg) {
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('org', newOrg);
+            window.location.search = urlParams.toString();
+        }
+
+        function updateBothellSelector() {
+            const org = getUrlParam('org');
+            const selector = document.getElementById('bothellSelector');
+            if (selector && (org === 'Bothell' || org === 'Bothell2')) {
+                selector.value = org;
+            }
+        }
+
         window.onload = function () {
             try {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -104,6 +118,20 @@
                 }
                 if (enQrCode) {
                     enQrCode.src = 'static/' + (qrMap[campus] || qrMap['Irvine']);
+                }
+
+                // Update Bothell selector
+                updateBothellSelector();
+
+                // Show/hide Bothell selector based on org parameter
+                const org = getUrlParam('org');
+                const bothellSelectorContainer = document.querySelector('.bothell-selector-container');
+                if (bothellSelectorContainer) {
+                    if (org.toLowerCase().includes('bothell')) {
+                        bothellSelectorContainer.style.display = 'block';
+                    } else {
+                        bothellSelectorContainer.style.display = 'none';
+                    }
                 }
             } catch (error) {
                 console.error('Error setting QR codes:', error);
@@ -146,13 +174,23 @@
 </head>
 
 <body>
-    <div class="fixed top-4 right-4 flex gap-4 z-50">
-        <button onclick="captureAndDownload('cn')" class="download-btn">
-            下载中文版
-        </button>
-        <button onclick="captureAndDownload('en')" class="download-btn">
-            Download English
-        </button>
+    <div class="fixed top-4 right-4 flex flex-col gap-4 z-50">
+        <div class="flex gap-4">
+            <button onclick="captureAndDownload('cn')" class="download-btn">
+                下载中文版
+            </button>
+            <button onclick="captureAndDownload('en')" class="download-btn">
+                Download English
+            </button>
+        </div>
+
+        <!-- Bothell Location Selector -->
+        <div class="bothell-selector-container" style="display: none;">
+            <select id="bothellSelector" onchange="changeBothellLocation(this.value)" class="bothell-selector">
+                <option value="Bothell">Bothell Campus</option>
+                <option value="Bothell2">Bothell Campus 2</option>
+            </select>
+        </div>
     </div>
 
     <!-- Chinese Version -->
@@ -241,8 +279,12 @@
                         <h4 class="blue">
                             <script>
                                 const org = getUrlParam('org');
-                                document.write(org);
-                            </script>校区
+                                if (org === 'Bothell2') {
+                                    document.write('Bothell 校区 2');
+                                } else {
+                                    document.write(org + '校区');
+                                }
+                            </script>
                         </h4>
                         <ul>
                             <li>
@@ -353,7 +395,13 @@
                 <div class="flex justify-between">
                     <div>
                         <h4 class="blue">
-                            <script>document.write(org);</script> Campus
+                            <script>
+                                if (org === 'Bothell2') {
+                                    document.write('Bothell Campus 2');
+                                } else {
+                                    document.write(org + ' Campus');
+                                }
+                            </script>
                         </h4>
                         <ul>
                             <li>
@@ -394,13 +442,34 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
+        .bothell-selector {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+            min-width: 150px;
+        }
+
+        .bothell-selector:hover {
+            background-color: #1976D2;
+        }
+
+        .bothell-selector option {
+            background-color: white;
+            color: black;
+        }
+
         .bubble {
             border-radius: 75px;
             border-bottom-left-radius: 0px;
             background-color: #C0E9FC;
             padding: 3rem;
             margin-top: 6rem;
-            margin-bottom: 0; 
+            margin-bottom: 0;
             position: relative;
         }
 
@@ -425,13 +494,13 @@
 
         #cn footer {
             width: 90%;
-            position: relative; 
+            position: relative;
             margin: 6rem auto;
             margin-top: 2rem !important;
             z-index: 10;
         }
 
-        #en footer{
+        #en footer {
             width: 90%;
             position: relative;
             margin: 6rem auto;
@@ -484,7 +553,7 @@
         }
 
         .qr-code-container {
-            width: 225px; 
+            width: 225px;
             height: 225px;
             flex-shrink: 0;
             display: flex;
@@ -534,7 +603,7 @@
             padding: 0;
             margin: 0;
             display: table-row;
-            line-height: 1.5; 
+            line-height: 1.5;
         }
 
         td {
